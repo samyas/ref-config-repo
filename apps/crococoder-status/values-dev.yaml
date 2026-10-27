@@ -1,0 +1,19 @@
+# Values for the DEV environment (namespace: dev). Overrides chart/values.yaml.
+# The CI updates image.tag after each successful build; keep it on ONE line.
+
+replicaCount: 1
+
+image:
+  repository: ghcr.io/samyas/ref-app-repo
+  tag: sha-006b273   # REPLACE with a real tag from your GHCR package until the CI manages it
+
+resources:
+  requests:
+    cpu: 50m
+    memory: 64Mi
+  limits:
+    cpu: 200m
+    memory: 256Mi
+
+serviceMonitor:
+  enabled: false     # set to true in Phase 6, once kube-prometheus-stack is installed

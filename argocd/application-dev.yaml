@@ -1,0 +1,28 @@
+# Argo CD Application for DEV: synchronises automatically with Git.
+# Two sources: the chart comes from ref-app-node, the values from ref-gitops ($values).
+# Multi-source Applications need Argo CD 2.6 or newer.
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: crococoder-status-dev
+  namespace: argocd
+spec:
+  project: default
+  sources:
+    - repoURL: https://github.com/samyas/ref-app-repo.git
+      targetRevision: main
+      path: chart
+      helm:
+        releaseName: crococoder-status
+        valueFiles:
+          - $values/apps/crococoder-status/values-dev.yaml
+    - repoURL: https://github.com/samyas/ref-infra-repo.git
+      targetRevision: main
+      ref: values
+  destination:
+    server: https://kubernetes.default.svc
+    namespace: dev            # created by Terraform: Argo CD must not create or own it
+  syncPolicy:
+    automated:
+      prune: true             # delete resources that were removed from Git
+      selfHeal: true          # undo manual changes made on the cluster (drift)

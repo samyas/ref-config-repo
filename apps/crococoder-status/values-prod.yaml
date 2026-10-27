@@ -1,0 +1,21 @@
+# Values for the PROD environment (namespace: prod). Overrides chart/values.yaml.
+# Changes here go through a merge request, then a MANUAL sync in Argo CD.
+
+replicaCount: 2      # two Pods: one can fail or restart without an outage
+
+image:
+  repository: ghcr.io/samyas/ref-app-repo
+  tag: sha-006b273   # REPLACE with a real tag; promote a version already proven in dev
+
+# Quota check (prod namespace: 10 pods, 2 CPU, 2Gi of requests):
+# 2 Pods + 1 surge during a rollout = 3 x 100m = 300m CPU and 3 x 128Mi = 384Mi.
+resources:
+  requests:
+    cpu: 100m
+    memory: 128Mi
+  limits:
+    cpu: 500m
+    memory: 256Mi
+
+serviceMonitor:
+  enabled: false     # set to true in Phase 6

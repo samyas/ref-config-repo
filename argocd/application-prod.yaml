@@ -1,0 +1,22 @@
+# Argo CD Application for PROD: NO "automated" block, so a human must press Sync.
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: crococoder-status-prod
+  namespace: argocd
+spec:
+  project: default
+  sources:
+    - repoURL: https://github.com/samyas/ref-app-repo.git
+      targetRevision: main    # later: pin a release tag so a chart change cannot reach prod by surprise
+      path: chart
+      helm:
+        releaseName: crococoder-status
+        valueFiles:
+          - $values/apps/crococoder-status/values-prod.yaml
+    - repoURL: https://github.com/samyas/ref-infra-repo.git
+      targetRevision: main
+      ref: values
+  destination:
+    server: https://kubernetes.default.svc
+    namespace: prod
