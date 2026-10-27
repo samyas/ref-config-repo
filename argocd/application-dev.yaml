@@ -16,7 +16,7 @@ spec:
         releaseName: crococoder-status
         valueFiles:
           - $values/apps/crococoder-status/values-dev.yaml
-    - repoURL: https://github.com/samyas/ref-infra-repo.git
+    - repoURL: https://github.com/samyas/ref-config-repo.git
       targetRevision: main
       ref: values
   destination:
