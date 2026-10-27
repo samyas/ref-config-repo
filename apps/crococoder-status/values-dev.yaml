@@ -16,4 +16,6 @@ resources:
     memory: 256Mi
 
 serviceMonitor:
-  enabled: false     # set to true in Phase 6, once kube-prometheus-stack is installed
+  enabled: true     # set to true in Phase 6, once kube-prometheus-stack is installed
+  labels:
+    release: kube-prometheus-stack
