@@ -9,7 +9,7 @@ metadata:
 spec:
   project: default
   sources:
-    - repoURL: https://github.com/samyas/ref-app-repo.git
+    - repoURL: https://github.com/samyas/ref-helm-repo.git
       targetRevision: main
       path: chart
       helm:
